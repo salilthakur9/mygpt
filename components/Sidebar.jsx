@@ -1,8 +1,9 @@
 import { assets } from "@/assets/assets";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { useClerk, UserButton } from "@clerk/nextjs";
 import { useAppContext } from "@/context/AppContext";
+import ChatLabel from "./ChatLabel";
 
 const Sidebar = ({ expand, setExpand }) => {
 
@@ -11,6 +12,8 @@ const Sidebar = ({ expand, setExpand }) => {
 
 
   const {user} = useAppContext();
+
+  const [openMenu, setOpenMenu] = useState({id: 0,open:false});
 
 
   return (
@@ -83,7 +86,7 @@ const Sidebar = ({ expand, setExpand }) => {
           }`}
         >
           <p className="my-1">Recents</p>
-          {/*chat label */}
+          <ChatLabel openMenu={openMenu} setOpenMenu={setOpenMenu}/>
         </div>
       </div>
 
