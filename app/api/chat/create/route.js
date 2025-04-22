@@ -22,6 +22,6 @@ export async function POST(req){
 
         return NextResponse.json({success: true, message:"Chat Created!"})
     } catch (error) {
-        return NextResponse.json({success: false, message: error.message})
+        return NextResponse.json({success: false, error: error.message})
     }
 }
