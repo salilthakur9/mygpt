@@ -1,16 +1,21 @@
-import mongoose, { connect, mongo } from 'mongoose'
+import mongoose from 'mongoose';
 
-let catched= global.mongoose || {conn:null, promise:null};
+let catched = global.mongoose || { conn: null, promise: null };
 
-export default async function connectDB(){
-    if(catched.conn) return catched.conn;
-    if(!catched.promise){
-        catched.promise=mongoose.connect(process.env.MONGODB_URI).then((mongoose)=> mongoose);
+export default async function connectDB() {
+    if (catched.conn) return catched.conn;
+
+    if (!catched.promise) {
+        const uri = process.env.MONGODB_URI;
+        console.log("Connecting to Mongo URI:", uri);
+        catched.promise = mongoose.connect(uri).then((mongoose) => mongoose);
     }
+
     try {
-        catched.conn= await catched.promise;
+        catched.conn = await catched.promise;
     } catch (error) {
-        console.log("Error connecting to MONGO DB: ", error)
+        console.log("❌ Error connecting to MONGO DB:", error);
     }
+
     return catched.conn;
 }
